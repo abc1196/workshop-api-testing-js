@@ -5,9 +5,6 @@ const chai = require('chai');
 const expect = chai.expect;
 
 describe('First Api Tests', () => {
-  /**
-   * GET Method
-   */
   it('Consume GET Service', async () => {
     const response = await agent.get('https://httpbin.org/ip');
 
@@ -28,9 +25,6 @@ describe('First Api Tests', () => {
     expect(response.body.args).to.eql(query);
   });
 
-  /**
-   * HEAD Method
-   */
   it('Consume HEAD Service', async () => {
     const response = await agent.head('https://httpbin.org/get');
 
@@ -52,55 +46,44 @@ describe('First Api Tests', () => {
     expect(response.body).to.eql({});
   });
 
-  /**
-   * PATCH Method
-   */
-  it('Consume PATCH Service with query parameters', async () => {
-    const query = {
+  it('Consume PATCH Service with body', async () => {
+    const body = {
       name: 'John',
       age: '31',
       city: 'New York'
     };
-    const response = await agent
-      .patch('https://httpbin.org/patch')
-      .query(query);
+    const response = await agent.patch('https://httpbin.org/patch').send(body);
 
+    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(response.body.args).to.eql(query);
+    expect(bodyData).to.eql(body);
   });
 
-  /**
-   * PUT Method
-   */
-
-  it('Consume PUT Service with query parameters', async () => {
-    const query = {
+  it('Consume PUT Service with body', async () => {
+    const body = {
       name: 'John',
       age: '31',
       city: 'New York'
     };
-    const response = await agent.put('https://httpbin.org/put').query(query);
+    const response = await agent.put('https://httpbin.org/put').send(body);
 
+    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(response.body.args).to.eql(query);
+    expect(bodyData).to.eql(body);
   });
 
-  /**
-   * DELETE Method
-   */
-
-  it('Consume DELETE Service with query parameters', async () => {
-    const query = {
+  it('Consume DELETE Service with body', async () => {
+    const body = {
       name: 'John',
       age: '31',
       city: 'New York'
     };
     const response = await agent
       .delete('https://httpbin.org/delete')
-      .query(query);
+      .send(body);
 
+    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(response.body.args).to.eql(query);
+    expect(bodyData).to.eql(body);
   });
 });
-
