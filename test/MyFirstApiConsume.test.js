@@ -54,9 +54,8 @@ describe('First Api Tests', () => {
     };
     const response = await agent.patch('https://httpbin.org/patch').send(body);
 
-    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(bodyData).to.eql(body);
+    expect(response.body.json).to.eql(body);
   });
 
   it('Consume PUT Service with body', async () => {
@@ -67,9 +66,8 @@ describe('First Api Tests', () => {
     };
     const response = await agent.put('https://httpbin.org/put').send(body);
 
-    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(bodyData).to.eql(body);
+    expect(response.body.json).to.eql(body);
   });
 
   it('Consume DELETE Service with body', async () => {
@@ -82,8 +80,7 @@ describe('First Api Tests', () => {
       .delete('https://httpbin.org/delete')
       .send(body);
 
-    const bodyData = JSON.parse(response.body.data);
     expect(response.status).to.equal(statusCode.OK);
-    expect(bodyData).to.eql(body);
+    expect(response.body.json).to.eql(body);
   });
 });
